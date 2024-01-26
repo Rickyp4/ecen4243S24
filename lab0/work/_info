@@ -2,62 +2,61 @@ m255
 K4
 z2
 !s99 nomlopt
-!s11f vlog 2021.3_1 2021.08, Aug 15 2021
+!s11f vlog 2021.3 2021.07, Jul 13 2021
 13
 !s112 1.1
 !i10d 8192
 !i10e 25
 !i10f 100
 cModel Technology
-Z0 d/home/jstine/ecen4243/ecen4243S23/lab0
+Z0 dC:/Users/ripower/Documents/ecen4243S24/lab0
 T_opt
-Z1 !s110 1674049627
-V?jonNT_TfcTl`=LjQ=9AY1
+Z1 !s110 1706311957
+Vdh1R:N6@>m2Ek1KA@NOWO0
 04 8 4 work stimulus fast 0
-=1-d45d645256b9-63c7f85b-7cd5f-44b4
+=1-00be43902c23-65b44115-2a4-81f0
 !s124 OEM100
 o-quiet -auto_acc_if_foreign -work work +acc
 Z2 tCvgOpt 0
 n@_opt
-OL;O;2021.3_1;73
-vFSM
+OL;O;2021.3;73
+vregfile
 Z3 DXx6 sv_std 3 std 0 22 9oUSJO;AeEaW`l:M@^WG92
 R1
 !i10b 1
-!s100 ;9UlQO`CZ6V49mWLXegBc0
-IKe2XOFzb5ZN:LTcXS[dna2
+!s100 =923Ek7ab7Im6cJ]cMhXV0
+ImFjo12::NcfmzzV@TPK:k2
 S1
 R0
-w1674049623
-8FSM.sv
-FFSM.sv
+w1706308926
+8regfile.sv
+Fregfile.sv
 !i122 0
-L0 1 41
+L0 1 23
 Z4 VDg1SIo80bB@j0V0VzS_@n1
-Z5 OL;L;2021.3_1;73
+Z5 OL;L;2021.3;73
 r1
 !s85 0
 31
-Z6 !s108 1674049627.000000
-Z7 !s107 FSM_tb.sv|FSM.sv|
-Z8 !s90 FSM.sv|FSM_tb.sv|
+Z6 !s108 1706311957.000000
+Z7 !s107 regfile_tb.sv|regfile.sv|
+Z8 !s90 -reportprogress|300|regfile.sv|regfile_tb.sv|
 !i113 0
 Z9 o-L mtiAvm -L mtiRnm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
 R2
-n@f@s@m
 vstimulus
 R3
 R1
 !i10b 1
-!s100 k_ZVFkNbCjP]^NaBm`GW[2
-I4n78T5WARghE5[fMo7VB]0
+!s100 D9Z8MfLRNY0CS1b@QQEYS2
+IiNE6V<NjN9]PK6n[zRZzZ0
 S1
 R0
-w1674049582
-8FSM_tb.sv
-FFSM_tb.sv
+w1706311938
+8regfile_tb.sv
+Fregfile_tb.sv
 !i122 0
-L0 1 46
+L0 1 49
 R4
 R5
 r1

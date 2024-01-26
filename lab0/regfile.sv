@@ -8,8 +8,16 @@ module regfile (input logic         clk,
    
    // three ported register file
    // read two ports combinationally
-   // write third port on rising edge of clock
+   // write third port on rising edge of clock (posedge clk)
    // register 0 hardwired to 0
+
+   
+      assign rd1 = ra1 == 5'b0 ? '0 : rf[ra1];
+      assign rd2 = ra2 == 5'b0 ? '0 : rf[ra2];
+      
+   always_ff @(posedge clk) begin
+      if (we3 & wa3 != 5'b0) rf[wa3] <= wd3;
+   end
    
    
 endmodule // regfile
