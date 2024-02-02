@@ -93,7 +93,63 @@ int r_process(char* i_) {
     return 0;
   }
 
-  /* Add other data instructions here */ 
+  /* Add other data instructions here */
+
+
+  // Compare Funct3 to determine SUB
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is a SUB instruction. \n");
+    SUB(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is a SLL instruction. \n");
+    SLL(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is a SLT instruction. \n");
+    SLT(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is a SLTU instruction. \n");
+    SLTU(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is a XOR instruction. \n");
+    XOR(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is an SRL instruction. \n");
+    SRL(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is an SRA instruction. \n");
+    SRA(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is an OR instruction. \n");
+    OR(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110011")) {
+    printf("--- This is an AND instruction. \n");
+    AND(Rd, Rs1, Rs2, Funct3);
+    return 0;
+  }
 
   return 1;	
 }
