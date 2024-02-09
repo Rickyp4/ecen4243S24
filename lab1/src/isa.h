@@ -75,7 +75,14 @@ int SH (char* i_);
 int SW (char* i_);
 
 // R instruction
-int SUB (char* i_);
+int SUB (int Rd, int Rs1, int Rs2, int Funct3) {
+
+  int cur = 0;
+  cur = CURRENT_STATE.REGS[Rs1] - CURRENT_STATE.REGS[Rs2];
+  NEXT_STATE.REGS[Rd] = cur;
+  return 0;
+
+}
 int SLL (char* i_);
 int SLT (char* i_);
 int SLTU (char* i_);

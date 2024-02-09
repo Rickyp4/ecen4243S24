@@ -70,6 +70,7 @@ int r_process(char* i_) {
   char rs2[6]; rs2[5] = '\0';
   char rd[6]; rd[5] = '\0';
   char funct3[4]; funct3[3] = '\0';
+  char funct7[8]; funct7[7] = '\0';
   for(int i = 0; i < 5; i++) {
     rs1[i] = i_[31-19+i];
     rs2[i] = i_[31-24+i];            
@@ -77,6 +78,9 @@ int r_process(char* i_) {
   }
   for(int i = 0; i < 3; i++) {
     funct3[i] = i_[31-14+i];
+  }
+  for(int i = 0; i < 7; i++) {
+    funct7[i] = i_[31-31+i];
   }
   int Rs1 = bchar_to_int(rs1);
   int Rs2 = bchar_to_int(rs2);		   
@@ -87,7 +91,7 @@ int r_process(char* i_) {
   printf("\n");
 
   /* Example - use and replicate */
-  if(!strcmp(d_opcode,"0110011")) {
+  if(!strcmp(d_opcode,"0110011") && !strcmp(funct7, "0000000")) {
     printf("--- This is an ADD instruction. \n");
     ADD(Rd, Rs1, Rs2, Funct3);
     return 0;
@@ -95,9 +99,7 @@ int r_process(char* i_) {
 
   /* Add other data instructions here */
 
-
-  // Compare Funct3 to determine SUB
-  if(!strcmp(d_opcode,"0110011")) {
+  if(!strcmp(d_opcode,"0110011") && !strcmp(funct7, "0100000")) {
     printf("--- This is a SUB instruction. \n");
     SUB(Rd, Rs1, Rs2, Funct3);
     return 0;
@@ -127,14 +129,14 @@ int r_process(char* i_) {
     return 0;
   }
 
-  if(!strcmp(d_opcode,"0110011")) {
-    printf("--- This is an SRL instruction. \n");
+  if(!strcmp(d_opcode,"0110011") && !strcmp(funct7, "0000000")) {
+    printf("--- This is a SRL instruction. \n");
     SRL(Rd, Rs1, Rs2, Funct3);
     return 0;
   }
 
-  if(!strcmp(d_opcode,"0110011")) {
-    printf("--- This is an SRA instruction. \n");
+  if(!strcmp(d_opcode,"0110011") && !strcmp(funct7, "0100000")) {
+    printf("--- This is a SRA instruction. \n");
     SRA(Rd, Rs1, Rs2, Funct3);
     return 0;
   }
@@ -168,6 +170,7 @@ int i_process(char* i_) {
   char rs1[6]; rs1[5] = '\0';		   
   char rd[6]; rd[5] = '\0';
   char funct3[4]; funct3[3] = '\0';
+  char funct7[8]; funct7[7] = '\0';
   char imm[13]; imm[12] = '\0';
   for(int i = 0; i < 5; i++) {
     rs1[i] = i_[31-19+i];
@@ -179,9 +182,13 @@ int i_process(char* i_) {
   for(int i = 0; i < 3; i++) {
     funct3[i] = i_[31-14+i];
   }
+  for(int i = 0; i < 7; i++)  {
+    funct7[i] = i_[31-31+i];
+  }
   int Rs1 = bchar_to_int(rs1);
   int Rd = bchar_to_int(rd);
   int Funct3 = bchar_to_int(funct3);
+  int Funct7 = bchar_to_int(funct7);
   int Imm = bchar_to_int(imm);
   printf ("Opcode = %s\n Rs1 = %d\n Imm = %d\n Rd = %d\n Funct3 = %d\n\n",
 	  d_opcode, Rs1, Imm, Rd, Funct3);
@@ -189,12 +196,96 @@ int i_process(char* i_) {
 
   /* Add other imm instructions here */ 
 
-  /* This is an Add Immediate Instruciton */
+  if(!strcmp(d_opcode,"0000011") && (Funct3 == 0)) {
+    printf("--- This is a LB instruction. \n");
+    LB(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0000011") && (Funct3 == 1)) {
+    printf("--- This is a LH instruction. \n");
+    LH(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0000011") && (Funct3 == 2)) {
+    printf("--- This is a LW instruction. \n");
+    LW(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0000011") && (Funct3 == 3)) {
+    printf("--- This is a LBU instruction. \n");
+    LBU(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0000011") && (Funct3 == 4)) {
+    printf("--- This is a LHU instruction. \n");
+    LHU(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && (Funct3 == 1)) {
+    printf("--- This is a SLLI instruction. \n");
+    SLLI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && (Funct3 == 2)) {
+    printf("--- This is a SLTI instruction. \n");
+    SLTI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && (Funct3 == 3)) {
+    printf("--- This is a SLTIU instruction. \n");
+    SLTIU(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && (Funct3 == 4)) {
+    printf("--- This is a XORI instruction. \n");
+    XORI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && ((Funct7 == 0) || (Funct7 == 1)) && (Funct3 == 5)) {
+    printf("--- This is a SLRI instruction. \n");
+    SRLI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011") && ((Funct7 == 32) || (Funct7 == 33)) && (Funct3 == 5)) {
+    printf("--- This is a SRAI instruction. \n");
+    SRAI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
   if(!strcmp(d_opcode,"0010011")) {
+    printf("--- This is an ORI instruction. \n");
+    ORI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0010011")) {
+    printf("--- This is an ANDI instruction. \n");
+    ANDI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
+  /* This is an Add Immediate Instruction*/
+  if(!strcmp(d_opcode,"0010011") && (Funct3 == 0)) {
     printf("--- This is an ADDI instruction. \n");
     ADDI(Rd, Rs1, Imm, Funct3);
     return 0;
-  }	  
+  }
+
+  if(!strcmp(d_opcode,"1100111") && (Funct3 == 0)) {
+    printf("--- This is a JALR instruction. \n");
+    JALR(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
 
   return 1;	
 }
@@ -248,12 +339,41 @@ int b_process(char* i_) {
 
   /* Add branch instructions here */
 
-  /* This is an Add Immediate Instruciton */
+  if(!strcmp(d_opcode,"1100011")) {
+    printf("--- This is a BEQ instruction. \n");
+    BEQ(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"1100011")) {
+    printf("--- This is a BLT instruction. \n");
+    BLT(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"1100011")) {
+    printf("--- This is a BGE instruction. \n");
+    BGE(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"1100011")) {
+    printf("--- This is a BLTU instruction. \n");
+    BLTU(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"1100011")) {
+    printf("--- This is a BGEU instruction. \n");
+    BGEU(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
   if(!strcmp(d_opcode,"1100011")) {
     printf("--- This is an BNE instruction. \n");
     BNE(Rs1, Rs2, Imm, Funct3);
     return 0;
-  }	    
+  }
 
   return 1;
 
@@ -265,6 +385,24 @@ int s_process(char* i_) {
 
   /* Add store instructions here */ 
 
+  if(!strcmp(d_opcode,"0100011")) {
+    printf("--- This is a SB instruction. \n");
+    SB(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0100011")) {
+    printf("--- This is a SH instruction. \n");
+    SH(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0100011")) {
+    printf("--- This is a SW instruction. \n");
+    SW(Rs1, Rs2, Imm, Funct3);
+    return 0;
+  }
+
   return 1;
 
 }
@@ -275,6 +413,12 @@ int j_process(char* i_) {
 
   /* Add jump instructions here */ 
 
+  if(!strcmp(d_opcode,"1101111")) {
+    printf("--- This is a JAL instruction. \n");
+    JAL(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
+
   return 1;
 
 }
@@ -284,6 +428,18 @@ int u_process(char* i_) {
   /* This function execute U type instructions */
 
   /* Add U instructions here */ 
+
+  if(!strcmp(d_opcode,"0010111")) {
+    printf("--- This is an AUIPC instruction. \n");
+    AUIPC(Rd, Rs1, Imm);
+    return 0;
+  }
+
+  if(!strcmp(d_opcode,"0110111")) {
+    printf("--- This is a LUI instruction. \n");
+    LUI(Rd, Rs1, Imm, Funct3);
+    return 0;
+  }
 
   return 1;
 
@@ -305,9 +461,21 @@ int decode_and_execute(char* i_) {
   */
 
   if((i_[25] == '0') && (i_[26] == '0') &&
+     (i_[27] == '0') && (i_[28] == '0') &&
+     (i_[29] == '0') && (i_[30] == '1') && (i_[31] == '1')) {
+    printf("- This is an Immediate Type Instruction (Load). \n");
+    i_process(i_);
+  }
+  if((i_[25] == '0') && (i_[26] == '0') &&
      (i_[27] == '1') && (i_[28] == '0') &&
      (i_[29] == '0') && (i_[30] == '1') && (i_[31] == '1')) {
-    printf("- This is an Immediate Type Instruction. \n");
+    printf("- This is an Immediate Type Instruction (Operands). \n");
+    i_process(i_);
+  }
+  if((i_[25] == '1') && (i_[26] == '1') &&
+     (i_[27] == '0') && (i_[28] == '0') &&
+     (i_[29] == '1') && (i_[30] == '1') && (i_[31] == '1')) {
+    printf("- This is an Immediate Type Instruction (Operands). \n");
     i_process(i_);
   }
   if((i_[25] == '0') && (i_[26] == '1') &&
@@ -339,7 +507,13 @@ int decode_and_execute(char* i_) {
      (i_[29] == '1') && (i_[30] == '1') && (i_[31] == '1')) {
     printf("- This is a U Type Instruction. \n");
     u_process(i_);
-  }  
+  }
+  if((i_[25] == '0') && (i_[26] == '1') &&
+     (i_[27] == '1') && (i_[28] == '0') &&
+     (i_[29] == '1') && (i_[30] == '1') && (i_[31] == '1')) {
+    printf("- This is a U Type Instruction. \n");
+    u_process(i_);
+  }    
   if((i_[25] == '1') && (i_[26] == '1') &&
      (i_[27] == '1') && (i_[28] == '0') &&
      (i_[29] == '0') && (i_[30] == '1') && (i_[31] == '1')) {
