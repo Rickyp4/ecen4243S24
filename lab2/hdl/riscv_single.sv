@@ -337,7 +337,7 @@ module alu (input  logic [31:0] a, b,
        4'b1000:  result = a ^ b;       // xor
        4'b1001:  result = a >> b;      // srl
        4'b1010:  result = a >>> b;     // sra
-       4'b1011:  result = b;
+       4'b1011:  result = b;           // lui
        default: result = 32'bx;
      endcase
 
